@@ -72,7 +72,7 @@ public class SortBooks {
 		array = sortAlex(array, length);
 		
 		for(int i = 0; i < length; i++){
-			result = array[i] + " ";
+			result += array[i] + " ";
 		}
 		return result;
 	}
@@ -103,7 +103,7 @@ public class SortBooks {
 		int i = start+1;
 		int j = end;
 		
-		while(i < j){
+		while(i <= j){
 			if(array[i] % 2 != 0){
 				if(array[i] <= p){
 					i++;
@@ -124,6 +124,14 @@ public class SortBooks {
 				}
 			}else{
 				i++;
+			}
+		}
+		if(array[i] % 2 == 0){
+			for(int k = i - 1; k >= start; k--){
+				if(array[k] % 2 != 0){
+					i = k;
+					break;
+				}
 			}
 		}
 		if(array[i] <= p){
@@ -190,12 +198,12 @@ public class SortBooks {
 		int i = start+1;
 		int j = end;
 		
-		while(i < j){
-			if(array[i] % 2 != 0){
+		while(i <= j){
+			if(array[i] % 2 == 0){
 				if(array[i] > p){
 					i++;
 				}else{
-					if(array[j] % 2 != 0){
+					if(array[j] % 2 == 0){
 						if(array[j] > p){
 							int temp = array[i];
 							array[i] = array[j];
@@ -213,34 +221,42 @@ public class SortBooks {
 				i++;
 			}
 		}
+		if(array[i] % 2 != 0){
+			for(int k = i - 1; k >= start; k--){
+				if(array[k] % 2 == 0){
+					i = k;
+					break;
+				}
+			}
+		}
 		if(array[i] > p){
 			array[start] = array[i];
 			array[i] = p;
 			for(int k = i - 1; k >= start; k--){
-				if(array[k] % 2 != 0){
+				if(array[k] % 2 == 0){
 					array = quickSort(array,start,k);
 					break;
 				}
 			}
 			for(int k = i+1; k <= end; k++){
-				if(array[k] % 2 != 0){
+				if(array[k] % 2 == 0){
 					array = quickSort(array,k,end);
 					break;
 				}
 			}
 		}else{
 			for(int k = i - 1; k >= start; k--){
-				if(array[k] % 2 != 0){
+				if(array[k] % 2 == 0){
 					array[start] = array[k];
 					array[k] = p;
 					for(int t = k - 1; t >= start; t--){
-						if(array[t] % 2 != 0){
+						if(array[t] % 2 == 0){
 							array = quickSort(array,start,t);
 							break;
 						}
 					}
 					for(int t = i+1; t <= end; t++){
-						if(array[t] % 2 != 0){
+						if(array[t] % 2 == 0){
 							array = quickSort(array,t,end);
 							break;
 						}

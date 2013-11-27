@@ -68,12 +68,14 @@ public class SortBooks {
 		for(int i = 0; i < length; i++){
 			array[i] = Integer.parseInt(arraystr[i]);
 		}
-		array = sortBob(array, length);
+		
+		array = sortBob(array, length);	
 		array = sortAlex(array, length);
 		
 		for(int i = 0; i < length; i++){
 			result += array[i] + " ";
 		}
+	
 		return result;
 	}
 	
@@ -96,80 +98,50 @@ public class SortBooks {
 		
 	}
 	private static int[] quickSort(int[] array, int start, int end) {
-		if(start == end){
+		if(start >= end){
 			return array;
 		}
 		int p = array[start];
-		int i = start+1;
+		int i = start;
 		int j = end;
 		
-		while(i <= j){
-			if(array[i] % 2 != 0){
-				if(array[i] <= p){
-					i++;
+		while(i < j){
+			if(array[j] % 2 != 0){
+				if(array[j] > p){
+					j--;
 				}else{
-					if(array[j] % 2 != 0){
-						if(array[j] <= p){
+					if(array[i] % 2 != 0){
+						if(array[i] > p){
 							int temp = array[i];
 							array[i] = array[j];
 							array[j] = temp;
-							i++;
 							j--;
 						}else{
-							j--;
+							i++;
 						}
 					}else{
-						j--;
+						i++;
 					}
 				}
 			}else{
-				i++;
+				j--;
 			}
 		}
-		if(array[i] % 2 == 0){
-			for(int k = i - 1; k >= start; k--){
-				if(array[k] % 2 != 0){
-					i = k;
-					break;
-				}
+		array[start] = array[i];
+		array[i] = p;
+		for(int k = i - 1; k >= start; k--){
+			if(array[k] % 2 != 0){
+				array = quickSort(array,start,k);
+				break;
 			}
 		}
-		if(array[i] <= p){
-			array[start] = array[i];
-			array[i] = p;
-			for(int k = i - 1; k >= start; k--){
-				if(array[k] % 2 != 0){
-					array = quickSort(array,start,k);
-					break;
-				}
-			}
-			for(int k = i+1; k <= end; k++){
-				if(array[k] % 2 != 0){
-					array = quickSort(array,k,end);
-					break;
-				}
-			}
-		}else{
-			for(int k = i - 1; k >= start; k--){
-				if(array[k] % 2 != 0){
-					array[start] = array[k];
-					array[k] = p;
-					for(int t = k - 1; t >= start; t--){
-						if(array[t] % 2 != 0){
-							array = quickSort(array,start,t);
-							break;
-						}
-					}
-					for(int t = i+1; t <= end; t++){
-						if(array[t] % 2 != 0){
-							array = quickSort(array,t,end);
-							break;
-						}
-					}
-					break;
-				}
+		for(int k = i+1; k <= end; k++){
+			if(array[k] % 2 != 0){
+				array = quickSort(array,k,end);
+				break;
 			}
 		}
+		
 		return array;
 	}
 	private static int[] sortBob(int[] array, int length) {
@@ -191,85 +163,89 @@ public class SortBooks {
 		
 	}
 	private static int[] quickSort2(int[] array, int start, int end) {
-		if(start == end){
+		if(start >= end){
 			return array;
 		}
 		int p = array[start];
-		int i = start+1;
+		int i = start;
 		int j = end;
 		
-		while(i <= j){
-			if(array[i] % 2 == 0){
-				if(array[i] > p){
-					i++;
+		while(i < j){
+			if(array[j] % 2 == 0){
+				if(array[j] < p){
+					j--;
 				}else{
-					if(array[j] % 2 == 0){
-						if(array[j] > p){
+					if(array[i] % 2 == 0){
+						if(array[i] < p){
 							int temp = array[i];
 							array[i] = array[j];
 							array[j] = temp;
-							i++;
 							j--;
 						}else{
-							j--;
+							i++;
 						}
 					}else{
-						j--;
+						i++;
 					}
 				}
 			}else{
-				i++;
+				j--;
 			}
 		}
-		if(array[i] % 2 != 0){
-			for(int k = i - 1; k >= start; k--){
-				if(array[k] % 2 == 0){
-					i = k;
-					break;
-				}
+		array[start] = array[i];
+		array[i] = p;
+		
+		for(int k = i - 1; k >= start; k--){
+			if(array[k] % 2 == 0){
+				array = quickSort2(array,start,k);
+				break;
 			}
 		}
-		if(array[i] > p){
-			array[start] = array[i];
-			array[i] = p;
-			for(int k = i - 1; k >= start; k--){
-				if(array[k] % 2 == 0){
-					array = quickSort(array,start,k);
-					break;
-				}
-			}
-			for(int k = i+1; k <= end; k++){
-				if(array[k] % 2 == 0){
-					array = quickSort(array,k,end);
-					break;
-				}
-			}
-		}else{
-			for(int k = i - 1; k >= start; k--){
-				if(array[k] % 2 == 0){
-					array[start] = array[k];
-					array[k] = p;
-					for(int t = k - 1; t >= start; t--){
-						if(array[t] % 2 == 0){
-							array = quickSort(array,start,t);
-							break;
-						}
-					}
-					for(int t = i+1; t <= end; t++){
-						if(array[t] % 2 == 0){
-							array = quickSort(array,t,end);
-							break;
-						}
-					}
-					break;
-				}
+		for(int k = i+1; k <= end; k++){
+			if(array[k] % 2 == 0){
+				array = quickSort2(array,k,end);
+				break;
 			}
 		}
 		return array;
 	}
 	public static void main(String[] args) {
-		start("test");
+		start("C-small-practice.in");
+		start("C-large-practice.in");
 
 	}
+	
+	/*standard quick sort
+	 * public static int[] qs(int[] array, int start, int end){
+		int p = array[start];
+		
+		int i = start;
+		int j = end;
+		if(i >= j){
+			return array;
+		}
+		while(i < j){
+			if(array[j] < p){
+				if(array[i] > p){
+					int t = array[i];
+					array[i] = array[j];
+					array[j] = t;
+					j--;
+				}else{
+					i++;
+				}
+			}else{
+				j--;
+			}
+		}
 
+		array[start] = array[i];
+		array[i] = p;
+
+		array = qs(array,start,i-1);
+		array = qs(array,i+1,end);
+		return array;
+		
+		
+	}*/
 }
